@@ -23,4 +23,4 @@ USER app
 
 EXPOSE 1488
 
-CMD ["sh", "-c", "flask --app app db upgrade && exec gunicorn --bind 0.0.0.0:${PORT:-1488} --workers ${WEB_CONCURRENCY:-2} --access-logfile - --error-logfile - app:app"]
+CMD ["sh", "-c", "flask --app app db upgrade && exec gunicorn --bind 0.0.0.0:${PORT:-1488} --workers ${WEB_CONCURRENCY:-1} --access-logfile - --error-logfile - app:app"]
