@@ -35,6 +35,22 @@ TRUSTED_PROXY_HOPS=0
 
 ## 2. Зависимости, миграции и процесс
 
+### Быстрый запуск Docker на хосте
+
+Скопируйте `backend/.env.production.example` в `backend/.env.production`, заполните PostgreSQL, Redis, SMTP и сгенерируйте `JWT_SECRET_KEY`. Затем из каталога `backend/` выполните:
+
+```sh
+docker compose up -d --build
+docker compose ps
+docker compose logs -f api
+```
+
+Контейнер слушает порт `1488` на loopback-интерфейсе хоста, миграции базы выполняются при старте, данные экземпляра хранятся в Docker volume `tengeflow-data`. Настройте HTTPS reverse proxy на `127.0.0.1:1488`; не открывайте порт `1488` для внешнего трафика и не публикуйте backend по HTTP.
+
+После получения публичного HTTPS-домена backend настройте Vercel rewrite на него командой из раздела «Подключить Vercel» ниже. Сам домен backend нельзя угадать до выбора/настройки хоста.
+
+### Запуск без Docker
+
 Рабочая директория Python-сервиса — `backend/`:
 
 ```sh
