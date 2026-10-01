@@ -1,0 +1,21 @@
+node_modules/
+build/
+coverage/
+.DS_Store
+.env.local
+.env.*.local
+npm-debug.log*
+.vercel/
+artifacts/
+
+.env
+.env.*
+!.env.example
+
+# Local Python backend, accounts, mail and process files.
+backend/.venv/
+backend/.runtime/
+backend/instance/
+__pycache__/
+*.py[cod]
+.pytest_cache/

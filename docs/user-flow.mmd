@@ -1,0 +1,34 @@
+flowchart TD
+  Landing[Главная] --> Register[Регистрация]
+  Landing --> Login[Вход]
+  Landing --> Demo[Try demo]
+  Register --> Email[Письмо с одноразовой ссылкой]
+  Email --> Confirm[Подтверждение email]
+  Confirm --> Check{Настройка завершена?}
+  Login --> Check
+  Check -->|Нет| Name[Шаг 1: имя и KZT]
+  Name --> Budget[Шаг 2: месячный бюджет]
+  Budget --> Limits[Шаг 3: лимиты пяти категорий]
+  Limits --> Save{Сервер подтвердил настройку?}
+  Save -->|Нет| Retry[Ошибка и сохранённый черновик]
+  Retry --> Limits
+  Save -->|Да| Home[Обзор]
+  Check -->|Да| Home
+  Demo --> Home
+  Home --> Add[Добавление расхода]
+  Home --> Transactions[История, поиск и фильтры]
+  Home --> Budgets[Бюджеты]
+  Home --> Insights[Аналитика]
+  Add --> Validate{Данные корректны?}
+  Validate -->|Нет| FieldError[Ошибка поля, значения сохранены]
+  FieldError --> Add
+  Validate -->|Да| Persist[Сохранение через репозиторий]
+  Persist --> Success{Сохранение подтверждено?}
+  Success -->|Да| Home
+  Success -->|Нет| Add
+  Transactions --> Edit[Редактирование или подтверждение удаления]
+  Edit --> Transactions
+  Login --> Forgot[Забыли пароль]
+  Forgot --> RecoveryEmail[Письмо восстановления]
+  RecoveryEmail --> Reset[Проверка ссылки и новый пароль]
+  Reset --> Check

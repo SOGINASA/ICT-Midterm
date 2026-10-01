@@ -1,0 +1,34 @@
+sequenceDiagram
+  actor User as Пользователь
+  participant UI as Форма расхода
+  participant Store as Zustand
+  participant Repo as FinanceRepository
+  participant API as Flask API
+  participant DB as SQLAlchemy / база
+
+  User->>UI: Сумма, категория, дата, сохранить
+  UI->>UI: Проверить поля через Zod
+  alt Некорректные данные
+    UI-->>User: Ошибка поля; черновик сохранён
+  else Корректные данные
+    UI->>Store: addExpense
+    Store->>Repo: Сохранить расход
+    Repo->>API: POST /api/transactions с access token
+    API->>API: Проверить сессию, входные данные и владельца
+    API->>DB: Записать расход текущего пользователя
+    alt Запись подтверждена
+      DB-->>API: Сохранённая запись
+      API-->>Repo: JSON с серверным ID и датой
+      Repo->>Repo: Проверить ответ
+      Repo-->>Store: Подтверждённый расход
+      Store-->>UI: Пересчитать расходы и остаток
+      UI-->>User: Успешное сохранение
+    else Ошибка сервера или соединения
+      API-->>Repo: Ошибка / нет подтверждения
+      Repo-->>Store: Сохранение не подтверждено
+      Store-->>UI: Сохранить черновик и показать ошибку
+      UI-->>User: Проверить историю перед повторной отправкой
+    end
+  end
+
+  Note over Repo,DB: В демо используется localStorage; pending/synced имитируются локально и не загружаются на сервер

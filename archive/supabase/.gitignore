@@ -1,0 +1,5 @@
+.temp/
+.branches/
+signing_keys.json
+.env
+.env.*

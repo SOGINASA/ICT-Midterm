@@ -1,0 +1,21 @@
+flowchart TB
+  User[Пользователь] --> Browser[React в браузере телефона или компьютера]
+  Browser --> Auth[Авторизация и выбор режима]
+  Auth --> Store[Zustand: отдельное состояние для каждой личности]
+  Store --> Repository[FinanceRepository]
+  Repository --> Demo[Локальный адаптер демо]
+  Demo <--> Local[(localStorage)]
+  Repository --> APIAdapter[HTTP-адаптер аккаунта]
+  APIAdapter <-->|JSON через /api| Proxy[CRA proxy локально / Vercel rewrite после публикации]
+  Proxy <--> Flask[Собственный Flask API]
+  Flask --> Session[Проверка токена, сессии и владельца]
+  Session --> Services[Авторизация, настройка, расходы и бюджеты]
+  Services <--> ORM[SQLAlchemy и миграции Alembic]
+  ORM <--> DB[(SQLite локально / PostgreSQL в production)]
+  Services --> Mail[Письма: локальный inbox / SMTP в production]
+  Auth --> Access[Access token в памяти]
+  Browser --> Refresh[HttpOnly refresh cookie]
+  Refresh --> Session
+  Services --> Setup{Настройка завершена?}
+  Setup -->|Нет| Onboarding[Имя, бюджет, лимиты]
+  Setup -->|Да| Workspace[Личный кабинет]

@@ -1,0 +1,326 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --motion-enter: 280ms;
+    --motion-exit: 180ms;
+    --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html {
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 1rem;
+  }
+  body {
+    @apply m-0 bg-[#f6f8fa] font-sans text-slate-800 antialiased;
+    font-size: 14px;
+    min-width: 280px;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  #root {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  a {
+    touch-action: manipulation;
+  }
+  button {
+    @apply transition-colors duration-150;
+    cursor: pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::selection {
+    @apply bg-brand-200;
+  }
+  input,
+  select,
+  textarea {
+    min-width: 0;
+    scroll-margin-block: 1rem;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-[#e7ebef] bg-white;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-700 active:bg-brand-900;
+  }
+  .btn-secondary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50;
+  }
+  .field {
+    @apply min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-base text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600 md:text-sm;
+  }
+  .label {
+    @apply mb-2 block text-sm font-medium text-slate-700;
+  }
+  .section-title {
+    @apply text-base font-semibold tracking-[-0.02em] text-slate-900;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500;
+  }
+  .muted {
+    @apply text-sm text-slate-500;
+  }
+  .icon-button {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900;
+  }
+  .page-heading {
+    @apply text-[28px] font-semibold leading-tight tracking-[-0.035em] text-slate-900 md:text-[30px];
+  }
+  .progress-track {
+    @apply h-1.5 overflow-hidden rounded-full bg-slate-100;
+  }
+}
+
+@layer utilities {
+  .safe-gutters {
+    padding-left: max(1.25rem, var(--safe-left));
+    padding-right: max(1.25rem, var(--safe-right));
+  }
+  .safe-top {
+    padding-top: var(--safe-top);
+  }
+  .safe-bottom {
+    padding-bottom: max(0.5rem, var(--safe-bottom));
+  }
+  .mobile-content-bottom {
+    padding-bottom: calc(8.5rem + var(--safe-bottom));
+  }
+  .mobile-action-bottom {
+    bottom: calc(5.75rem + var(--safe-bottom));
+    right: max(1.25rem, var(--safe-right));
+  }
+  @media (min-width: 768px) {
+    .safe-gutters {
+      padding-left: max(2.25rem, var(--safe-left));
+      padding-right: max(2.25rem, var(--safe-right));
+    }
+  }
+  @media (min-width: 1024px) {
+    .mobile-content-bottom {
+      padding-bottom: 2.5rem;
+    }
+  }
+}
+
+.page-enter {
+  animation: enter var(--motion-enter) var(--motion-ease);
+}
+.motion-content-enter {
+  animation: content-enter var(--motion-enter) var(--motion-ease);
+}
+@keyframes content-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.motion-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: grid-template-rows var(--motion-enter) var(--motion-ease),
+    opacity var(--motion-enter) ease, transform var(--motion-enter) var(--motion-ease),
+    margin var(--motion-enter) var(--motion-ease);
+}
+.motion-collapse > .motion-presence-content {
+  min-height: 0;
+  overflow: hidden;
+}
+.motion-collapse[data-presence="open"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+.motion-collapse:not([data-presence="open"]) {
+  margin-block: 0 !important;
+}
+.motion-collapse[data-presence="closing"],
+.motion-fade[data-presence="closing"] {
+  transition-duration: var(--motion-exit);
+}
+.motion-fade {
+  opacity: 0;
+  transition: opacity var(--motion-enter) ease;
+}
+.motion-fade[data-presence="open"] { opacity: 1; }
+/* These wrappers must not establish a containing block for fixed overlays. */
+.motion-modal, .motion-modal > .motion-presence-content,
+.motion-floating, .motion-floating > .motion-presence-content { display: contents; }
+.motion-floating > .motion-presence-content > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--motion-enter) ease, transform var(--motion-enter) var(--motion-ease);
+}
+.motion-floating[data-presence="open"] > .motion-presence-content > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.motion-floating[data-presence="closing"] > .motion-presence-content > * {
+  transition-duration: var(--motion-exit);
+}
+/* Validation appears gently without delaying its live announcement. */
+[role="alert"] { animation: content-enter 180ms var(--motion-ease); }
+@keyframes enter {
+  from {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.number {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+}
+.recharts-wrapper:focus {
+  outline: none;
+}
+.recharts-tooltip-wrapper {
+  opacity: 0;
+  transition: opacity var(--motion-exit) ease, transform 160ms var(--motion-ease),
+    visibility 0s linear var(--motion-exit) !important;
+}
+.recharts-tooltip-wrapper[style*="visibility: visible"] {
+  opacity: 1;
+  transition-delay: 0s !important;
+}
+dialog {
+  padding: 0;
+  border: none;
+  color: inherit;
+}
+.app-modal {
+  --modal-anchor: -100%;
+  --modal-offset: 24px;
+  --modal-scale: 1;
+  position: fixed;
+  inset: calc(
+      var(--visual-viewport-top, 0px) + var(--visual-viewport-height, 100dvh)
+    )
+    0 auto;
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(
+    var(--visual-viewport-height, 100dvh) - max(0.75rem, var(--safe-top))
+  );
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 1.5rem 1.5rem 0 0;
+  opacity: 0;
+  transform: translateY(calc(var(--modal-anchor) + var(--modal-offset))) scale(var(--modal-scale));
+  transition: opacity var(--motion-enter) ease,
+    transform var(--motion-enter) var(--motion-ease);
+}
+.app-modal[data-presence="open"] {
+  opacity: 1;
+  transform: translateY(var(--modal-anchor)) scale(1);
+}
+.app-modal[data-presence="closing"] {
+  transition-duration: var(--motion-exit);
+  pointer-events: none;
+}
+.app-modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+.app-modal-wide {
+  --modal-max-width: 36rem;
+}
+.modal-header {
+  padding: 0.75rem max(1.25rem, var(--safe-right)) 0.75rem
+    max(1.25rem, var(--safe-left));
+}
+.modal-content {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.25rem max(1.25rem, var(--safe-right))
+    max(1.25rem, var(--safe-bottom)) max(1.25rem, var(--safe-left));
+  scroll-padding-block: 1rem;
+}
+@media (min-width: 640px) {
+  .app-modal {
+    --modal-anchor: -50%;
+    --modal-offset: 12px;
+    --modal-scale: 0.975;
+    top: calc(
+      var(--visual-viewport-top, 0px) + var(--visual-viewport-height, 100dvh) /
+        2
+    );
+    width: calc(100% - 3rem);
+    max-width: var(--modal-max-width, 28rem);
+    max-height: calc(var(--visual-viewport-height, 100dvh) - 3rem);
+    border-radius: 1.25rem;
+  }
+  .modal-header {
+    padding-inline: 1.5rem;
+  }
+  .modal-content {
+    padding: 1.5rem;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  /* A 16px field avoids Safari's automatic focus zoom, including on tablets. */
+  .field {
+    font-size: 1rem;
+  }
+}
+dialog::backdrop {
+  opacity: 0;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(3px);
+  transition: opacity var(--motion-enter) ease;
+}
+.app-modal[data-presence="open"]::backdrop { opacity: 1; }
+.app-modal[data-presence="closing"]::backdrop { transition-duration: var(--motion-exit); }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
