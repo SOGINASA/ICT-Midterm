@@ -66,7 +66,7 @@ npm run deploy:api -- https://your-backend.example
 | --- | --- |
 | Build Command | `npm run build` |
 | Output Directory | `build` |
-| Environment Variable | `REACT_APP_API_URL=/api` |
+| Environment Variable | `PENIS_APP_API_URL=/api` |
 
 После изменения конфигурации создайте новый deployment. Frontend не содержит секретных API-ключей; права проверяет сервер по сессии. Не задавайте localhost в настройках опубликованного сайта. Механизм внешнего проксирования описан в [документации Vercel rewrites](https://vercel.com/docs/routing/rewrites).
 

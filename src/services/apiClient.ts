@@ -7,7 +7,7 @@ export const authSessionSchema = z.object({
 });
 export type AuthSession = z.infer<typeof authSessionSchema>;
 
-const configuredUrl = process.env.REACT_APP_API_URL?.trim() || "/api";
+const configuredUrl = process.env.PENIS_APP_API_URL?.trim() || "/api";
 function validApiUrl(value: string): boolean {
   if (value.startsWith("/") && !value.startsWith("//") && !/[?#\\]/.test(value)) return true;
   try {

@@ -69,7 +69,7 @@ async function configureFrontend() {
   const retained = previous.split(/\r?\n/).filter((line) =>
     !/^REACT_APP_(?:SUPABASE_\w+|API_URL)=/.test(line) &&
     !/^# Local (?:Supabase|TengeFlow API)/.test(line)).join('\n').trim();
-  await writeFile(path, (retained ? retained + '\n\n' : '') + '# Local TengeFlow API through the CRA proxy. Public configuration only.\nREACT_APP_API_URL=/api\n', { mode: 0o600 });
+  await writeFile(path, (retained ? retained + '\n\n' : '') + '# Local TengeFlow API through the CRA proxy. Public configuration only.\nPENIS_APP_API_URL=/api\n', { mode: 0o600 });
 }
 function addresses() {
   console.log('API: ' + api + '\nLocal inbox: ' + api + '/dev/inbox\nDatabase: backend/instance/tengeflow.sqlite3');

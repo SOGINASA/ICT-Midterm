@@ -93,7 +93,7 @@ Frontend можно разместить на Vercel: Build Command `npm run bui
 npm run deploy:api -- https://your-backend.example
 ```
 
-В frontend используется только `REACT_APP_API_URL=/api`; пароли базы, SMTP и ключ JWT остаются на backend. Полный порядок миграций, переменные и Gunicorn — [BACKEND_SETUP.md](docs/BACKEND_SETUP.md).
+В frontend используется только `PENIS_APP_API_URL=/api`; пароли базы, SMTP и ключ JWT остаются на backend. Полный порядок миграций, переменные и Gunicorn — [BACKEND_SETUP.md](docs/BACKEND_SETUP.md).
 
 ## Материалы к защите
 
