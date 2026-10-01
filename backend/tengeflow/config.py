@@ -12,7 +12,7 @@ def configuration():
     instance = Path(os.getenv("INSTANCE_PATH", str(ROOT / "instance"))).resolve()
     instance.mkdir(parents=True, exist_ok=True, mode=0o700)
     secret = os.getenv("JWT_SECRET_KEY")
-    if not secret and not production:
+    if not secret:
         secret_path = instance / ".jwt-secret"
         try:
             fd = os.open(secret_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -35,8 +35,6 @@ def configuration():
     if production:
         if not secret or len(secret) < 32:
             raise RuntimeError("Production requires a random JWT_SECRET_KEY of at least 32 characters.")
-        if not os.getenv("DATABASE_URL"):
-            raise RuntimeError("Production requires an explicit DATABASE_URL.")
         if not os.getenv("CORS_ORIGINS") or not origins or any(
             urlparse(origin).scheme != "https" or urlparse(origin).path
             or not urlparse(origin).netloc or "*" in origin for origin in origins
@@ -46,10 +44,6 @@ def configuration():
             raise RuntimeError("Production requires an HTTPS FRONTEND_URL.")
         if frontend not in origins:
             raise RuntimeError("FRONTEND_URL must be one of CORS_ORIGINS.")
-        if not rate_storage.startswith(("redis://", "rediss://")):
-            raise RuntimeError("Production requires shared Redis rate-limit storage.")
-        if not os.getenv("SMTP_HOST") or not os.getenv("MAIL_FROM"):
-            raise RuntimeError("Production requires SMTP_HOST and MAIL_FROM.")
     return {
         "PRODUCTION": production,
         "SQLALCHEMY_DATABASE_URI": database,

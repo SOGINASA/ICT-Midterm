@@ -292,6 +292,27 @@ def test_dev_inbox_is_loopback_only_and_never_registered_in_production(app, clie
     assert production.test_client().get("/api/dev/messages").status_code == 404
 
 
+def test_production_configuration_supports_sqlite_without_external_services(tmp_path, monkeypatch):
+    from tengeflow.config import configuration
+
+    monkeypatch.setenv("APP_ENV", "production")
+    monkeypatch.setenv("INSTANCE_PATH", str(tmp_path))
+    monkeypatch.delenv("JWT_SECRET_KEY", raising=False)
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.setenv("FRONTEND_URL", "https://ict-midterm-artyom.vercel.app")
+    monkeypatch.setenv("CORS_ORIGINS", "https://ict-midterm-artyom.vercel.app")
+    monkeypatch.delenv("RATELIMIT_STORAGE_URI", raising=False)
+    monkeypatch.delenv("SMTP_HOST", raising=False)
+
+    settings = configuration()
+
+    assert settings["SQLALCHEMY_DATABASE_URI"].startswith("sqlite:///")
+    assert settings["RATELIMIT_STORAGE_URI"] == "memory://"
+    assert settings["SMTP_HOST"] == ""
+    assert len(settings["JWT_SECRET_KEY"]) >= 32
+    assert configuration()["JWT_SECRET_KEY"] == settings["JWT_SECRET_KEY"]
+
+
 def test_json_errors_no_cache_and_migration_health(client):
     health = client.get("/api/health")
     assert health.status_code == 200 and health.json["status"] == "ok"
