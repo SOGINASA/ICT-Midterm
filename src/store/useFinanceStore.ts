@@ -24,7 +24,7 @@ import {
 } from "../types/finance";
 import { todayISO } from "../utils/dates";
 import { draftSchema } from "../utils/validation";
-
+// деплой
 export interface FinanceState {
   transactions: Transaction[];
   categories: Category[];
