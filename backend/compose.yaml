@@ -4,15 +4,10 @@ services:
     env_file:
       - .env.production
     environment:
-      DATABASE_URL: sqlite:////data/tengeflow.sqlite3
-      JWT_SECRET_KEY: ""
-      RATELIMIT_STORAGE_URI: memory://
-      SMTP_HOST: ""
-      SMTP_USERNAME: ""
-      SMTP_PASSWORD: ""
+      PORT: "1488"
       WEB_CONCURRENCY: "1"
     ports:
-      - "127.0.0.1:${PORT:-1488}:1488"
+      - "127.0.0.1:${BACKEND_HOST_PORT:-1488}:1488"
     volumes:
       - tengeflow-data:/data
     restart: unless-stopped

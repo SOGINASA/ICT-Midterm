@@ -1,0 +1,165 @@
+{
+  "screenshots": [
+    {
+      "name": "landing-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "register-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "overview-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "transactions-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "budgets-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "insights-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "fullPage": false
+    },
+    {
+      "name": "overview-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "validation-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "add-expense-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "add-expense-mobile-full.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": true
+    },
+    {
+      "name": "success-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "updated-overview-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "offline-success-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "offline-pending-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "offline-recovered-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "onboarding-name-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fullPage": false
+    },
+    {
+      "name": "onboarding-budget-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fullPage": false
+    },
+    {
+      "name": "onboarding-budget-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "onboarding-limits-mobile.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fullPage": false
+    },
+    {
+      "name": "onboarding-limits-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "fullPage": false
+    }
+  ],
+  "errors": []
+}

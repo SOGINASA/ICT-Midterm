@@ -1,0 +1,126 @@
+{
+  "capturedAt": "2026-10-01T19:14:44.020Z",
+  "data": "Fictional demo seed data and a temporary local onboarding test account. Test account removed after capture.",
+  "files": [
+    {
+      "name": "add-expense-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "add-expense-details-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "add-expense-mobile-full.png",
+      "width": 390,
+      "height": 1779
+    },
+    {
+      "name": "add-expense-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "budgets-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "insights-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "landing-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "mobile-register-full.png",
+      "width": 390,
+      "height": 1055
+    },
+    {
+      "name": "mobile-register.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "offline-pending-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "offline-recovered-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "offline-success-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "onboarding-budget-desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "onboarding-budget-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "onboarding-limits-desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "onboarding-limits-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "onboarding-name-desktop.png",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "overview-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "overview-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "register-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "success-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "transactions-desktop.png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "updated-overview-mobile.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "validation-mobile.png",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

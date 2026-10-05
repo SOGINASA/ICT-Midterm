@@ -85,15 +85,15 @@ React → отдельный Zustand store → FinanceRepository
 
 ## Публикация
 
-Frontend можно разместить на Vercel: Build Command `npm run build`, Output Directory `build`. Для работающих аккаунтов нужен отдельно размещённый Python backend с постоянной базой и SMTP. Локальный сервер компьютера посетителям сайта недоступен. Внешний deployment пока не выполнен.
+Frontend размещён на Vercel: Build Command `npm run build`, Output Directory `build`. Для работающих аккаунтов используется отдельно размещённый Python backend с постоянной базой и SMTP. Локальный сервер компьютера посетителям сайта недоступен.
 
 Браузер обращается к `/api`: локально запросы перенаправляет CRA, на Vercel — внешний rewrite. Настройте адрес размещённого backend перед публикацией:
 
 ```sh
-npm run deploy:api -- https://your-backend.example
+npm run deploy:api -- https://foodtrack.beast-inside.kz/tenge/api
 ```
 
-В frontend используется только `PENIS_APP_API_URL=/api`; пароли базы, SMTP и ключ JWT остаются на backend. Полный порядок миграций, переменные и Gunicorn — [BACKEND_SETUP.md](docs/BACKEND_SETUP.md).
+В frontend используется только `REACT_APP_API_URL=/api`; Vercel перенаправляет запросы на `https://foodtrack.beast-inside.kz/tenge/api`. После изменения `vercel.json` или переменных окружения нужен новый deployment frontend. Пароли базы, SMTP и ключ JWT остаются на backend. Полный порядок миграций, переменные и Gunicorn — [BACKEND_SETUP.md](docs/BACKEND_SETUP.md).
 
 ## Материалы к защите
 

@@ -47,6 +47,8 @@ docker compose logs -f api
 
 Контейнер слушает порт `1488` на loopback-интерфейсе хоста, миграции базы выполняются при старте, база и ключ подписи хранятся в Docker volume `tengeflow-data`. Используется один Gunicorn worker. Настройте HTTPS reverse proxy на `127.0.0.1:1488`; не открывайте порт `1488` для внешнего трафика и не публикуйте backend по HTTP.
 
+Compose читает настройки базы, JWT и SMTP из `.env.production` и фиксирует внутренний порт `1488`. Чтобы изменить только порт на хосте, используйте, например, `BACKEND_HOST_PORT=18000 docker compose up -d --build` и направьте reverse proxy на `127.0.0.1:18000`. Эта переменная задаётся в окружении команды Compose, а не в `.env.production`.
+
 После получения публичного HTTPS-домена backend настройте Vercel rewrite на него командой из раздела «Подключить Vercel» ниже. Сам домен backend нельзя угадать до выбора/настройки хоста.
 
 ### Запуск без Docker
@@ -68,13 +70,13 @@ python3 -m venv .venv
 
 Браузер обращается к тому же origin по `/api`. Vercel передаёт эти запросы размещённому backend; это позволяет refresh cookie работать в пределах сайта. Для локальной разработки ту же роль выполняет прокси CRA.
 
-В корне проекта настройте внешний API rewrite, указав настоящий HTTPS-адрес backend без `/api`:
+В корне проекта настройте внешний API rewrite, указав полный HTTPS-адрес API. Текущий backend расположен под префиксом `/tenge`, который необходимо сохранить:
 
 ```sh
-npm run deploy:api -- https://your-backend.example
+npm run deploy:api -- https://foodtrack.beast-inside.kz/tenge/api
 ```
 
-Команда меняет `vercel.json`: API rewrite должен находиться перед SPA fallback. Маршруты локального inbox не должны публиковаться. На самом backend обязательно остаётся `APP_ENV=production`.
+Команда меняет `vercel.json`: `/api/:path*` перенаправляется на `https://foodtrack.beast-inside.kz/tenge/api/:path*` перед SPA fallback. Команда также принимает HTTPS origin без пути — в этом случае добавляется `/api`. Она не запускает deployment. Маршруты локального inbox не должны публиковаться. На самом backend обязательно остаётся `APP_ENV=production`.
 
 В Vercel укажите:
 
@@ -82,9 +84,22 @@ npm run deploy:api -- https://your-backend.example
 | --- | --- |
 | Build Command | `npm run build` |
 | Output Directory | `build` |
-| Environment Variable | `PENIS_APP_API_URL=/api` |
+| Environment Variable | `REACT_APP_API_URL=/api` |
 
-После изменения конфигурации создайте новый deployment. Frontend не содержит секретных API-ключей; права проверяет сервер по сессии. Не задавайте localhost в настройках опубликованного сайта. Механизм внешнего проксирования описан в [документации Vercel rewrites](https://vercel.com/docs/routing/rewrites).
+Удалите старую переменную `PENIS_APP_API_URL`, если она задана в Vercel: CRA её не включает в сборку. `REACT_APP_API_URL` оставьте равной `/api`, а не внешнему URL. Так refresh cookie с `SameSite=Lax` и `Path=/api/auth` остаётся на домене frontend; прямое обращение браузера к другому домену с `/tenge/api` не соответствует этой настройке cookie.
+
+После изменения конфигурации создайте новый deployment из коммита с обновлённым `vercel.json`. Переменные CRA подставляются при сборке, поэтому изменение только настроек Vercel не меняет уже опубликованный JavaScript. Frontend не содержит секретных API-ключей; права проверяет сервер по сессии. Не задавайте localhost в настройках опубликованного сайта. Механизм внешнего проксирования описан в [документации Vercel rewrites](https://vercel.com/docs/routing/rewrites).
+
+Быстрая проверка маршрутизации после deployment:
+
+```sh
+curl -i https://ict-midterm-artyom.vercel.app/api/health
+curl -i -X POST https://ict-midterm-artyom.vercel.app/api/auth/refresh \
+  -H 'Origin: https://ict-midterm-artyom.vercel.app' \
+  -H 'Content-Type: application/json' --data '{}'
+```
+
+Первый запрос должен вернуть `200` и JSON `{"service":"tengeflow-api","status":"ok"}`. Второй без cookie должен вернуть JSON с `401 unauthorized`: это ожидаемый отказ для неавторизованного запроса. HTML вместо JSON на `/api/health` и `405` на POST означают, что запросы всё ещё попадают в статический frontend. Если прямой запрос к `https://foodtrack.beast-inside.kz/tenge/api/health` отвечает, перезапуск Python не исправит такой маршрут Vercel.
 
 ## 4. Проверить опубликованную версию
 

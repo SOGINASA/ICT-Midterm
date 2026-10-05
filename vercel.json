@@ -4,6 +4,10 @@
   "framework": "create-react-app",
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://foodtrack.beast-inside.kz/tenge/api/:path*"
+    },
+    {
       "source": "/((?!api(?:/|$)|.*\\.).*)",
       "destination": "/index.html"
     }
